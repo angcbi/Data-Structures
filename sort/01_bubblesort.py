@@ -71,10 +71,31 @@ def selectionSort(alist):
 
     return alist
 
+@log
+def insertSort(alist):
+    """
+    插入排序是把元素插入到已经排好序的列表中，列表中插入位置之后的元素后以一位，需要循环n-1次
+    需要两个变量，一个保存i的值，另外一个保存待插入的位置
+    """
+    for i in range(1, len(alist)):
+        temp_index = i
+        temp = alist[i]
+        for j in range(i):
+            # 从后往前比较
+            if alist[i-j-1] > temp:
+                alist[temp_index] = alist[i-j-1]
+                temp_index = i-j-1
+
+        # 把i插入到正确位置
+        alist[temp_index] = temp
+
+    return alist
 
 if __name__ == '__main__':
-    test_list = [random.randrange(0, 1000) for i in range(100)]
+    test_list = [random.randrange(0, 1000) for i in range(10)]
     print test_list
-    print bubbleSort(test_list)
-    print bubbleSort2(test_list)
-    print selectionSort(test_list)
+    # 复制一份test_list 传给排序函数,可使用list, [:]或copy方法
+    print bubbleSort(list(test_list))
+    print bubbleSort2(list(test_list))
+    print selectionSort(list(test_list))
+    print insertSort(list(test_list))
