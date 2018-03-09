@@ -100,7 +100,8 @@ def insertSort(alist):
 def shellSort(alist):
     """
     希尔排序块是因为，一次移动了一大步逆序(如升序排列， 后面数字比前面数字大叫逆序)， 冒泡排序每次只能移动一次逆序
-    步长公式  2^k - 1 (1, 3, 7, 15)
+    步长公式  n/2^k  称为希尔增量
+    希尔博增量 2^k - 1
     """
     length = len(alist)
     # 迭代过程中步长变小，当步长为1时，即为一次完整的插入排序
@@ -116,21 +117,45 @@ def shellSort(alist):
                 temp = alist[j]
                 position = j
 
-                while position > 0 and alist[position] > temp:
+                while position >= gap and alist[position-gap] > temp:
                     alist[position] = alist[position-gap]
                     position = position-gap
 
                 alist[position] = temp
 
+        gap = gap // 2
+
+    return alist
+
+@log
+def shellSort2(alist):
+    # 步长采用2^k - 1
+    length = len(alist)
+    # 实际步长需要根据列表总长度动态定义
+    steps = [1, 3, 7, 15, 31]
+    for step in steps[::-1]:
+        for i in range(step):
+            for j in range(step+i, length, step):
+                temp = alist[j]
+                temp_index = j
+
+                while temp_index >= step  and alist[temp_index-step] > temp:
+                    alist[temp_index] = alist[temp_index-step]
+                    temp_index = temp_index-step
+
+                alist[temp_index] = temp
+
     return alist
 
 
 if __name__ == '__main__':
-    test_list = [random.randrange(0, 1000) for i in range(10)]
-    print test_list
+    test_list = [random.randrange(0, 1000) for i in range(10000)]
+    # test_list = [305, 456, 833, 758, 348, 370, 416, 333, 356, 19]
+    # print test_list
     # 复制一份test_list 传给排序函数,可使用list, [:]或copy方法
-    print bubbleSort(list(test_list))
-    print bubbleSort2(list(test_list))
-    print selectionSort(list(test_list))
-    print insertSort(list(test_list))
-    print shellSort(list(test_list))
+    # print bubbleSort(list(test_list))
+    # print bubbleSort2(list(test_list))
+    # print selectionSort(list(test_list))
+    # print insertSort(list(test_list))
+    shellSort(list(test_list))
+    shellSort2(list(test_list))
