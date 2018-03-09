@@ -148,6 +148,40 @@ def shellSort2(alist):
     return alist
 
 
+def mergeSort(alist):
+    print 'split', alist
+    if len(alist) > 1:
+        mid = len(alist) // 2
+        lefthalf = alist[:mid]
+        righhalf = alist[mid:]
+
+        mergeSort(lefthalf)
+        mergeSort(righhalf)
+
+        i, j, k = 0, 0, 0
+        while i < len(lefthalf) and j < len(lefthalf):
+            if lefthalf[i] < righhalf[j]:
+                alist[k] = lefthalf[i]
+                i = i + 1
+            else:
+                alist[k] = righhalf[j]
+                j = j + 1
+
+            k = k + 1
+
+        while i < len(lefthalf):
+            alist[k] = lefthalf[i]
+            i = i + 1
+            k = k + 1
+            
+        while j < len(righhalf):
+            alist[k] = righhalf[j]
+            j = j + 1
+            k = k + 1
+
+    print 'Merging', alist
+
+
 
 if __name__ == '__main__':
     test_list = [random.randrange(0, 1000) for i in range(10)]
