@@ -1,16 +1,7 @@
 # -*- coding:utf-8 -*-
-import time
 import random
-from functools import wraps
 
-def log(func):
-    @wraps(func)
-    def wrapper(*args, **kwargs):
-        start_time = int(time.time()*1000)
-        res = func(*args, **kwargs)
-        print '%s cost %dms' % (func.__name__, time.time()*1000 - start_time)
-        return res
-    return wrapper
+from util import log
 
 @log
 def bubbleSort(alist):
