@@ -1,9 +1,13 @@
 # -*- coding:utf-8 -*-
-# 对的次序性是指父节点的key小许等于子节点的key(最小堆)
+# 最小堆是指父节点的key小于等于子节点(左子节点和右子节点)的key(最小堆), 最大堆相反
+# 以左右孩子为跟的子树也是一个堆
 # 或父节点的key大于等于子节点的key(最大堆)
 # 用列表保存顺序, 父节点索引为p, 左子节点位置为2p, 右子节点位置为2p+1
 # 有子节点位置m，查找父节点位置为m//2
 # 第一个元素为0
+# python第三方数据结构库pythonds
+# from pythonds.trees.binheap import BinHeap
+
 
 class BinHeap(object):
     def __init__(self):
@@ -12,6 +16,7 @@ class BinHeap(object):
         self.currentSize = 0
 
     def percUp(self, i):
+        # 第一个位置添加0是为了方便遍历跟的父节点
         while i // 2 > 0:
             if self.heapList[i] < self.heapList[i//2]:
                 self.heapList[i], self.heapList[i//2] = self.heapList[i//2], self.heapList[i]
