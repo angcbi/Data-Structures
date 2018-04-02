@@ -64,3 +64,21 @@ class BinHeap(object):
             i = i - 1
 
 
+
+if __name__ == '__main__':
+    bp = BinHeap()
+    bp.insert(3)
+    bp.insert(10)
+    bp.insert(11)
+    print bp.heapList
+    bp.insert(2)
+    print bp.heapList
+    bp.insert(0)
+    print bp.heapList
+    bp.delMin()
+    print bp.heapList
+
+    bp.buildHeap([5, 3, 8, 1, 9, 7, 6])
+    print bp.currentSize
+    print bp.heapList
+
