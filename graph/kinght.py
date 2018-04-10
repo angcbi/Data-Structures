@@ -1,4 +1,9 @@
 # -*- coding:utf-8 -*-
+"""
+a. 先将实际需求转化为图
+b. 采用DFS(Depth First Search)搜索树
+c. BFS是一次简历搜素树的一层，而DFS是尽可能深的搜索树的一枝
+"""
 from pythonds.graphs import Graph
 
 
@@ -46,6 +51,27 @@ def legalCoord(x, bdSize):
 
     return False
 
+
+def knightTour(n ,path, u, limit):
+    u.setColor('gray')
+    path.append(u)
+    if n < limit:
+        nbrList = list(u.getConnections())
+        i = 0
+        done = False
+        while i < len(nbrList) and not done:
+            if nbrList[i].getColor() == 'white':
+                done = knightTour(n+1, path, nbrList[i], limit)
+
+            i = i + 1
+
+        if not done:
+            path.pop()
+            u.setColor('white')
+        else:
+            done = True
+
+    return done
 
 if __name__ == '__main__':
     g = knightGraph(4)
