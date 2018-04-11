@@ -52,11 +52,12 @@ def legalCoord(x, bdSize):
     return False
 
 
-def knightTour(n ,path, u, limit):
+def knightTour(n, path, u, limit):
     u.setColor('gray')
     path.append(u)
     if n < limit:
-        nbrList = list(u.getConnections())
+        # nbrList = list(u.getConnections())
+        nbrList = orderByAvali(u)
         i = 0
         done = False
         while i < len(nbrList) and not done:
@@ -68,13 +69,30 @@ def knightTour(n ,path, u, limit):
         if not done:
             path.pop()
             u.setColor('white')
-        else:
-            done = True
+    else:
+        done = True
 
     return done
 
+def orderByAvali(n):
+    resList = []
+    for v in n.getConnections():
+        if v.getColor() == 'white':
+            c = 0
+            for w in v.getConnections():
+                if w.getColor() == 'white':
+                    c = c + 1
+            resList.append((c, v))
+
+    resList.sort(key=lambda x: x[0])
+    return [y[1] for y in resList]
+
+
 if __name__ == '__main__':
-    g = knightGraph(4)
-    for v in g:
-        for w in v.getConnections():
-            print v.getId(), w.getId(), '\n'
+    g = knightGraph(7)
+    v = g.getVertex(8)
+    # print v.getConnections()
+    path = []
+    knightTour(0, path, v, 49)
+    print map(lambda x: x.getId(), path)
+
